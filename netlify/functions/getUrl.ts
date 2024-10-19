@@ -27,11 +27,8 @@ export const handler: Handler = async (event: HandlerEvent) => {
     }
 
     return {
-      statusCode: 301,
-      headers: {
-        Location: result.rows[0].url,
-        'Cache-Control': 'no-cache',
-      },
+      statusCode: 200,
+      body: JSON.stringify({ url: result.rows[0].url }),
     };
   } catch (err) {
     console.error(err);
