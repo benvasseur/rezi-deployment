@@ -1,72 +1,46 @@
-# REZI 241016-Ben
+# Getting Started with Create React App
 
-## URL Shortener
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-The project consists of building a simple URL Shortener App that will cover **Frontend**, **Backend API**, **DB storing/fetching**, and **Deployment**, using the following stacks:
-- React (`Vanilla React` or `Next.JS - App Router`) + `TypeScript`.
-- API: `CREATE`, `GET`, `DELETE`, using [Netlify Functions](https://www.netlify.com/platform/core/functions/)
-- Database: `PostgreSQL` (You can host it on your way, or using a free service such as [Aiven](https://aiven.io/free-postgresql-database))
-- Deploy: `Netlify`.
+## Available Scripts
 
-## Guidelines
+In the project directory, you can run:
 
-### Commits
+### `npm start`
 
-We require regular and small commits.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### Frontend
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-#### Path `/`
+### `npm test`
 
-Provide a submitting form to shorten a URL from its input. The data should be sent to an API `Netlify Function`.
-Take as an example, Youtube URLs: `https://www.youtube.com/watch?v=dQw4w9WgXcQ`. The API should provide a response
-including the new shortened URL, such as example: `https://your_host/:shortid` -> `https://your_host/dQw4`
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-#### Path `/:shortid`
+### `npm run build`
 
-Should call the API `GET`, with the `:shortid` then redirect the user to the full URL following the HTTP Redirect conventions.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
----
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### Backend Netlify Functions
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-#### `CREATE`:
-You should receive the full URL in the *body* payload, and save it in the database. API Response could provide the new shortened URL.
-Duplicate entries are allowed.
+### `npm run eject`
 
-### `GET`:
-Receive the `shortened URL` (ex: `[dQw4](https://your_host/dQw4)`). This handle should decode the `short id` to match the incremental ID from the DB to be fetched.
-If an entry is found, redirect the user following the HTTP Redirect Code conventions.
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-### `DELETE`:
-Receive the `short id` (ex: `dQw4`), and delete the entry from the database. API returns proper HTTP status.
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
----
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-## Database
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-The primary key will be incremental rather than uuid_v4. The table should be as follows:
+## Learn More
 
-| ID  | URL  |
-|---|---|
-| 1  | https://app.rezi.ai/dashboard/resumes  |
-| 2  | https://www.reddit.com/r/Rezi/  |
-| ... | 
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-! We do not store the short ID in the database.
-
-## Deployment
-
-Deploy your project using Netlify and provide us the preview deploy link by email at: `luc@rezi.io`
-
-## UI/UX
-
-We require the use of Tailwind.
-
-## Resources
-
-- [React](https://react.dev)
-- [NextJS](https://nextjs.org)
-- [Netlify](https://netlify.com)
-- [Netlify Functions](https://www.netlify.com/platform/core/functions/)
-- [Aiven](https://aiven.io/free-postgresql-database)
+To learn React, check out the [React documentation](https://reactjs.org/).
