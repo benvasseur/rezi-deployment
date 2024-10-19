@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@utils/*": ["utils/*"]
+    },
     "target": "es5",
     "lib": [
       "dom",
@@ -21,6 +25,8 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src"
+    "src",
+    "./netlify/functions/**/*.ts", 
+    "./utils/**/*.ts"
   ]
 }
