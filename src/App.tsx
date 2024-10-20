@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import UrlForm from './components/UrlForm';
-import RedirectHandler from './components/RedirectHandler';
+import UrlForm from './pages/Dashboard';
+import RedirectHandler from './pages/RedirectHandler';
 
 const App = () => {
   return (
