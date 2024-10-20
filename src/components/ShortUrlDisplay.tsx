@@ -8,7 +8,7 @@ interface Props {
 
 const ShortUrlDisplay: React.FC<Props> = ({ shortUrl, handleCopy, handleOpen }) => {
   return (
-    <div className="border border-gray-300 p-4 rounded-md relative mt-4">
+    <div className="border border-gray-300 p-4 rounded-md relative mt-8">
       <h3 className="absolute -top-3 left-3 bg-white px-1 text-sm text-gray-600">
         Shortened URL
       </h3>

@@ -16,7 +16,7 @@ code {
     monospace;
 }
 
-#redirect-handler-page {
+#root {
   background-color: #2a1943;
   background-image: radial-gradient(circle at 100% 0, #2545d3ad, #fff0), radial-gradient(circle at 0 100%, #9d72ff52, #fff0 17%);
 }

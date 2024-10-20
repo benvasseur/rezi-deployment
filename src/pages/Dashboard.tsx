@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ShortUrlDisplay from '../components/ShortUrlDisplay';
+import Header from '../components/Header';
 
 const Dashboard = () => {
   const [url, setUrl] = useState('');
@@ -31,7 +32,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container mx-auto p-48 pt-40">
+    <div className="container mx-auto p-48 pt-4 min-h-screen">
+      <Header />
       <form onSubmit={handleSubmit} className="flex w-full">
         <input
           type="text"
