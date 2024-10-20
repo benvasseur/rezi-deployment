@@ -9,6 +9,7 @@ const Dashboard = () => {
   const [shortUrl, setShortUrl] = useState<string>('');
   const [urlList, setUrlList] = useState<ShortenedUrl[]>([]);
   const [toastMessage, setToastMessage] = useState<string>('');
+  const [toastType, setToastType] = useState<'success' | 'error'>('success');
 
   useEffect(() => {
     const fetchUrls = async () => {
@@ -22,6 +23,30 @@ const Dashboard = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const urlPattern = new RegExp(
+      '^(https?:\\/\\/)' + // Protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // Domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR IP (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // Port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // Query string
+      '(\\#[-a-z\\d_]*)?$', 'i' // Fragment locator
+    );
+
+    console.log(url);
+    console.log(urlPattern.test(url));
+
+    if (!urlPattern.test(url)) {
+      setShortUrl('');
+      setToastType('error');
+      setToastMessage('Invalid URL, please enter a valid one');
+      setTimeout(() => {
+        setToastType('success');
+        setToastMessage('');
+      }, 2000);
+      return;
+    }
+
     const response = await fetch('/.netlify/functions/createUrl', {
       method: 'POST',
       headers: {
@@ -95,7 +120,11 @@ const Dashboard = () => {
       )}
 
       {toastMessage && (
-        <div className="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded">
+        <div
+          className={`fixed bottom-4 right-4 py-2 px-4 rounded ${
+            toastType === 'error' ? 'bg-red-500' : 'bg-green-500'
+          } text-white`}
+        >
           {toastMessage}
         </div>
       )}
