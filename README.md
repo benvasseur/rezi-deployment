@@ -58,3 +58,6 @@ The project is designed for deployment on Netlify. You can deploy it via Netlify
 
 ## Screenshots
 
+![screenshot](<Screenshot 2024-10-20 at 18.26.51.png>)
+
+![screenshot](<Screenshot 2024-10-20 at 18.27.06.png>)
