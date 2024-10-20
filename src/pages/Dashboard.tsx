@@ -1,10 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ShortUrlDisplay from '../components/ShortUrlDisplay';
 import Header from '../components/Header';
+import ShortenedUrlList from '../components/ShortenedUrlList';
+import { ShortenedUrl } from '../../types/urlTypes';
 
 const Dashboard = () => {
-  const [url, setUrl] = useState('');
-  const [shortUrl, setShortUrl] = useState('');
+  const [url, setUrl] = useState<string>('');
+  const [shortUrl, setShortUrl] = useState<string>('');
+  const [urlList, setUrlList] = useState<ShortenedUrl[]>([]);
+  const [toastMessage, setToastMessage] = useState<string>('');
+
+  useEffect(() => {
+    const fetchUrls = async () => {
+      const response = await fetch('/.netlify/functions/listUrls');
+      const { urls } = await response.json();
+      setUrlList(urls);
+    };
+
+    fetchUrls();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,24 +29,38 @@ const Dashboard = () => {
       },
       body: JSON.stringify({ url }),
     });
-    const data = await response.json();
-    setShortUrl(data.shortUrl);
+    const data:ShortenedUrl = await response.json();
+    console.log(data);
+    setShortUrl(`${window.location.host}/${data.shortId}`);
+    setUrlList([...urlList, data]);
   };
 
-  const handleCopy = () => {
-    if (shortUrl) {
-      navigator.clipboard.writeText(shortUrl);
+  const handleDelete = async (shortId: string) => {
+    const confirmed = window.confirm("Are you sure you want to delete this URL?");
+    
+    if (confirmed) {
+      await fetch(`/.netlify/functions/deleteUrl?shortId=${shortId}`, {
+        method: 'DELETE',
+      });
+      setUrlList(urlList.filter((item) => item.shortId !== shortId));
     }
   };
 
-  const handleOpen = () => {
-    if (shortUrl) {
-      window.open(`http://${shortUrl}`, '_blank');
-    }
+  const handleCopy = (shortUrl: string) => {
+    navigator.clipboard.writeText(shortUrl);
+    setToastMessage('URL copied to clipboard!');
+    
+    setTimeout(() => {
+      setToastMessage('');
+    }, 2000);  // Hide message after 2 seconds
+  };
+
+  const handleOpen = (shortUrl: string) => {
+    window.open(`http://${shortUrl}`, '_blank');
   };
 
   return (
-    <div className="container mx-auto p-48 pt-4 min-h-screen">
+    <div className="container mx-auto px-48 pt-4 pb-20 min-h-screen flex flex-col">
       <Header />
       <form onSubmit={handleSubmit} className="flex w-full">
         <input
@@ -40,12 +68,10 @@ const Dashboard = () => {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="Enter URL"
-          // className="border p-2 mb-4"
           className="flex-grow p-2 border border-gray-300 rounded-l-md"
         />
         <button 
           type="submit" 
-          // className="bg-blue-500 text-white p-2"
           className="p-2 bg-blue-500 text-white w-32 rounded-r-md"
         >
           Shorten URL
@@ -55,9 +81,24 @@ const Dashboard = () => {
       {shortUrl && (
         <ShortUrlDisplay 
           shortUrl={shortUrl} 
+          handleCopy={() => handleCopy(shortUrl)} 
+          handleOpen={() => handleOpen(shortUrl)} 
+        />
+      )}
+
+      {urlList.length > 0 && (
+        <ShortenedUrlList 
+          urlList={urlList} 
+          handleDelete={handleDelete} 
           handleCopy={handleCopy} 
           handleOpen={handleOpen} 
         />
+      )}
+
+      {toastMessage && (
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded">
+          {toastMessage}
+        </div>
       )}
     </div>
   );

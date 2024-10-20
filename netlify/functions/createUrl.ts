@@ -20,7 +20,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ shortUrl: `${event.headers.host}/${shortId}` }),
+      body: JSON.stringify({ shortId }),
     };
   } catch (err) {
     console.error(err);
