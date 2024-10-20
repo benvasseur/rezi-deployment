@@ -3,7 +3,6 @@
     "baseUrl": "./",
     "paths": {
       "@utils/*": ["utils/*"],
-      "@components/*": ["src/components/*"]
     },
     "target": "es5",
     "lib": [
