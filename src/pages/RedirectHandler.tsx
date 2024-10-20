@@ -18,7 +18,7 @@ const RedirectHandler = () => {
           // Let user see cool loading animation
           setTimeout(() => {
             setUrl(data.url);
-            // window.location.href = data.url;
+            window.location.href = data.url;
           }, 1000);
         }
       } catch (err) {

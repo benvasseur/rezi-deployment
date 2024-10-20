@@ -2,7 +2,6 @@ import pool from '@utils/db';
 import type { Handler, HandlerEvent } from "@netlify/functions";
 
 export const handler: Handler = async (event: HandlerEvent) => {
-  console.log(event);
   const { shortId } = event.queryStringParameters || {};
 
   if (!shortId) {

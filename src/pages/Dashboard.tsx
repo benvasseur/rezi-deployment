@@ -30,7 +30,6 @@ const Dashboard = () => {
       body: JSON.stringify({ url }),
     });
     const data:ShortenedUrl = await response.json();
-    console.log(data);
     setShortUrl(`${window.location.host}/${data.shortId}`);
     setUrlList([...urlList, data]);
   };
@@ -52,7 +51,7 @@ const Dashboard = () => {
     
     setTimeout(() => {
       setToastMessage('');
-    }, 2000);  // Hide message after 2 seconds
+    }, 2000);
   };
 
   const handleOpen = (shortUrl: string) => {
