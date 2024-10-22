@@ -19,7 +19,7 @@ const RedirectHandler = () => {
           setTimeout(() => {
             setUrl(data.url);
             window.location.href = data.url;
-          }, 1000);
+          }, 700);
         }
       } catch (err) {
         setError('An error occurred while fetching the URL');
